@@ -6,34 +6,69 @@
 #    By: josanton <josanton@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2022/06/22 15:24:28 by josanton         ###   ########.fr        #
+#    Updated: 2022/06/22 17:11:59 by josanton         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	so_long.c
+# =============================== ONLY COMPILES ON MACS ====================================
 
-LIBFT_DIR = libft/
+# COMPILATION VARS
+
+SRCS	=	so_long.c
 
 NAME	=	so_long
 
-GCC		=	gcc -Wall -Wextra -Wextra -L $(LIBFT_DIR) -lft
+#DIRECTORIES
 
-RM		=	rm -f
+LIBFT_DIR	=	libft/
 
+MLX_DIR	=	minilibx_opengl_20191021/
 
-${NAME}:	${SRCS}
-			@${MAKE} -C $(LIBFT_DIR)
-			@${GCC} ${SRCS}  -o ${NAME}
+#GCC & FLAGS
 
-all:		${NAME}
+COMPILER	=	gcc
 
-clean:		
-			$(MAKE) clean -C $(LIBFT_DIR)
+42FLAGS	=	-Wall -Wextra -Wextra
+
+LIBFLAGS =	-L${LIBFT_DIR} -lft
+
+MLXFLAGS =	-L${MLX_DIR} -lmlx -framework OpenGL -framework AppKit
+
+GCC	=	${COMPILER} ${42FLAGS} ${LIBFLAGS} ${MLXFLAGS}
+
+#CLEAN
+
+RM	=	rm -f
+
+#COLORS
+
+COLOUR_GREEN=\033[7;1;32m
+COLOUR_END=\033[0m
+COLOUR_YELLOW=\033[7;1;33m
+
+# +*+*+**++*+*+*+*+*+*+**+ RULES ++*+**+**++*+*+*+*+*+*+*+*+*+
+
+${NAME}:	${SRCS} | libft
+	@${GCC} ${SRCS}  -o ${NAME}
+	@echo "$(COLOUR_GREEN) >>> SO_LONG OK <<< $(COLOUR_END)"
+
+all:	${NAME} submodule
+
+submodule:
+	@git submodule update --init --recursive
+
+libft:
+	@make -C ${LIBFT_DIR}
+
+clean:
+	@$(MAKE) clean -C $(LIBFT_DIR)
+	@echo "$(COLOUR_YELLOW) >>> OBJS CLEANED <<< $(COLOUR_END)"
 
 fclean:		clean
-			$(MAKE) fclean -C $(LIBFT_DIR)
-			${RM} ${NAME}
+	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@${RM} ${NAME}
+	@echo "$(COLOUR_YELLOW) >>> ALL CLEANED <<< $(COLOUR_END)"
 
-re:			fclean all
+re:	fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:	all clean fclean re libft submodule

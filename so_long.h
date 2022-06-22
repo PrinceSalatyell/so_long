@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josanton <josanton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/20 13:34:14 by josanton          #+#    #+#             */
-/*   Updated: 2022/06/22 16:53:31 by josanton         ###   ########.fr       */
+/*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
+/*   Updated: 2022/06/22 17:00:30 by josanton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-int	main(void)
-{
-	void	*mlx;
+# include "libft.h"
+# include <mlx.h>
 
-	mlx = mlx_init();
-	ft_printf("Hello World");
-	return (0);
-}
+#endif
