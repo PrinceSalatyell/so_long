@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: josanton <josanton@student.42.fr>          +#+  +:+       +#+         #
+#    By: easybreezy <easybreezy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2022/06/22 17:11:59 by josanton         ###   ########.fr        #
+#    Updated: 2022/06/28 19:19:26 by easybreezy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,13 @@ NAME	=	so_long
 
 LIBFT_DIR	=	libft/
 
-MLX_DIR	=	minilibx_opengl_20191021/
+MLX_DIR	=	mlx/
 
 #GCC & FLAGS
 
 COMPILER	=	gcc
 
-42FLAGS	=	-Wall -Wextra -Wextra
+42FLAGS	=	-Wall -Wextra -Wextra -Imlx
 
 LIBFLAGS =	-L${LIBFT_DIR} -lft
 
