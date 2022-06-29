@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: easybreezy <easybreezy@student.42.fr>      +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2022/06/28 19:19:26 by easybreezy       ###   ########.fr        #
+#    Updated: 2022/06/29 02:01:51 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,27 +18,46 @@ SRCS	=	so_long.c
 
 NAME	=	so_long
 
+UNAME	=	$(shell uname)
+
 #DIRECTORIES
 
 LIBFT_DIR	=	libft/
 
 MLX_DIR	=	mlx/
 
+MLX_LINUX_DIR	=	mlx_linux/
+
 #GCC & FLAGS
 
 COMPILER	=	gcc
 
-42FLAGS	=	-Wall -Wextra -Wextra -Imlx
+42FLAGS	=	-Wall -Wextra -Wextra
 
 LIBFLAGS =	-L${LIBFT_DIR} -lft
 
-MLXFLAGS =	-L${MLX_DIR} -lmlx -framework OpenGL -framework AppKit
+MLXFLAGS =	-Imlx -L${MLX_DIR} -lmlx -framework OpenGL -framework AppKit
 
-GCC	=	${COMPILER} ${42FLAGS} ${LIBFLAGS} ${MLXFLAGS}
+MLXFLAGS_LINUX	=	-I/usr/include -Imlx_linux -O3 -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+
+GCC	=	${COMPILER} ${42FLAGS} ${LIBFLAGS}
 
 #CLEAN
 
 RM	=	rm -f
+
+#COMPILE FOR DIFFERENT MACHINES
+
+ifeq ($(UNAME), Darwin)
+#mac
+	GCC += ${MLXFLAGS}
+else ifeq ($(UNAME), FreeBSD)
+#FreeBSD
+	CC = clang
+else
+#Linux and others...
+	GCC += ${MLXFLAGS_LINUX}
+endif
 
 #COLORS
 
