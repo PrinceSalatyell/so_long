@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: easybreezy <easybreezy@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2022/06/29 02:01:51 by marvin           ###   ########.fr        #
+#    Updated: 2022/06/29 19:50:56 by easybreezy       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	=	so_long.c
 
 NAME	=	so_long
 
-UNAME	=	$(shell uname)
+UNAME	=	${shell uname}
 
 #DIRECTORIES
 
@@ -48,10 +48,10 @@ RM	=	rm -f
 
 #COMPILE FOR DIFFERENT MACHINES
 
-ifeq ($(UNAME), Darwin)
+ifeq (${UNAME}, Darwin)
 #mac
 	GCC += ${MLXFLAGS}
-else ifeq ($(UNAME), FreeBSD)
+else ifeq (${UNAME}, FreeBSD)
 #FreeBSD
 	CC = clang
 else
@@ -69,7 +69,7 @@ COLOUR_YELLOW=\033[7;1;33m
 
 ${NAME}:	${SRCS} | libft
 	@${GCC} ${SRCS}  -o ${NAME}
-	@echo "$(COLOUR_GREEN) >>> SO_LONG OK <<< $(COLOUR_END)"
+	@echo "${COLOUR_GREEN} >>> SO_LONG OK <<< ${COLOUR_END}"
 
 all:	${NAME} submodule
 
@@ -80,13 +80,13 @@ libft:
 	@make -C ${LIBFT_DIR}
 
 clean:
-	@$(MAKE) clean -C $(LIBFT_DIR)
-	@echo "$(COLOUR_YELLOW) >>> OBJS CLEANED <<< $(COLOUR_END)"
+	@${MAKE} clean -C ${LIBFT_DIR}
+	@echo "${COLOUR_YELLOW} >>> OBJS CLEANED <<< ${COLOUR_END}"
 
 fclean:		clean
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@${MAKE} fclean -C ${LIBFT_DIR}
 	@${RM} ${NAME}
-	@echo "$(COLOUR_YELLOW) >>> ALL CLEANED <<< $(COLOUR_END)"
+	@echo "${COLOUR_YELLOW} >>> ALL CLEANED <<< ${COLOUR_END}"
 
 re:	fclean all
 
