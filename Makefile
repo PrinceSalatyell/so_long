@@ -6,7 +6,7 @@
 #    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2022/08/05 12:53:26 by salatiel         ###   ########.fr        #
+#    Updated: 2022/08/16 21:56:38 by salatiel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,16 +36,6 @@ CC	=	gcc
 
 42FLAGS	=	-Wall -Wextra -Wextra
 
-LIB_INC =	-L${LIBFT_DIR} -lft
-
-MLX_INC =	-I
-
-# LIBFLAGS =	
-
-MLXFLAGS =	-L${MLX_DIR} -lmlx -framework OpenGL -framework AppKit
-
-MLXFLAGS_LINUX	=	-L ${MLX_LINUX_DIR} -lmlx -lXext -lX11 -lm -lz
-
 GCC	=	${CC} ${42FLAGS}
 
 #CLEAN
@@ -56,13 +46,10 @@ RM	=	rm -f
 
 ifeq (${UNAME}, Darwin)
 #mac
-	GCC+=${MLXFLAGS}
-else ifeq (${UNAME}, FreeBSD)
-#FreeBSD
-	CC = clang
+	MLX=-L${MLX_DIR} -lmlx -framework OpenGL -framework AppKit
 else
 #Linux and others...
-	GCC+=${MLXFLAGS_LINUX}
+	MLX=-Ilibft/ -Imlx_linux/ -L${LIBFT_DIR} -lft -L${MLX_LINUX_DIR} -lmlx -L/usr/lib/ -lXext -lX11 -lm -lz
 endif
 
 #COLORS
@@ -73,13 +60,10 @@ COLOUR_YELLOW=\033[7;1;33m
 
 # +*+*+**++*+*+*+*+*+*+**+ RULES ++*+**+**++*+*+*+*+*+*+*+*+*+
 
-all:	${NAME} submodule
+all:	${NAME} | submodule
 
-${NAME}:	${OBJS} | libft
-	@echo ${GCC}
-	@echo ${OBJS}
-	@echo ${MLX_INC}
-	@${GCC} ${OBJS} -o ${NAME}
+${NAME}:	${OBJS} mlx_linux/libmlx.a libft/libft.a
+	@${GCC} -o ${NAME} ${OBJS} ${MLX}
 	@echo "${COLOUR_GREEN} >>> SO_LONG OK <<< ${COLOUR_END}"
 
 submodule:
@@ -88,11 +72,16 @@ submodule:
 %.o: %.c
 	@${CC} ${42FLAGS} -I mlx_linux -c $< -o $@
 
-libft:
-	@make -C ${LIBFT_DIR}
+libft/libft.a:
+	@make -s -C ${LIBFT_DIR}
+
+mlx_linux/libmlx.a:
+	@make -s -C ${MLX_LINUX_DIR}
+	@echo "${COLOUR_GREEN} >>> MLX OK <<< ${COLOUR_END}"
 
 clean:
 	@${MAKE} clean -C ${LIBFT_DIR}
+	@${MAKE} clean -C ${MLX_LINUX_DIR}
 	@echo "${COLOUR_YELLOW} >>> OBJS CLEANED <<< ${COLOUR_END}"
 
 fclean:		clean
@@ -102,4 +91,4 @@ fclean:		clean
 
 re:	fclean all
 
-.PHONY:	all clean fclean re libft submodule
+.PHONY:	all clean fclean re libft submodule mlx
