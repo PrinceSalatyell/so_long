@@ -3,18 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josanton <josanton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2022/08/05 12:04:59 by salatiel         ###   ########.fr       */
+/*   Updated: 2022/11/26 18:34:06 by josanton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+// LIBRARIES
+
 # include "libft/libft.h"
 # include <mlx.h>
+
+// DEFINE KEYS
+
+# define ESC 65307
+# define LEFT 65361
+# define RIGHT 65363
+# define UP 65362
+# define DOWN 65364
+# define A 97
+# define D 100
+# define W 119
+# define S 115
+
+// USEFUL STRUCTS
 
 typedef struct s_win
 {
@@ -35,5 +51,7 @@ typedef struct s_img
 	int		endian;
 	int		line_len;
 }		t_img;
+
+// FUNCTIONS
 
 #endif
