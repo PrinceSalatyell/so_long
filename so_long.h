@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josanton <josanton@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: josanton <josanton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2022/11/26 21:04:13 by josanton         ###   ########.fr       */
+/*   Updated: 2022/11/26 22:07:41 by josanton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,18 @@
 
 // USEFUL STRUCTS
 
-typedef struct s_win
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
+typedef struct s_vars {
+	void	*mlx;
+	void	*win;
+}			t_vars;
+
+typedef struct s_img {
+	void	*img;
+	char	*relative_path;
 	int		height;
 	int		width;
-}		t_win;
+}			t_img;
+
 
 // FUNCTIONS
 
