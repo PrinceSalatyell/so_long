@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josanton <josanton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josanton <josanton@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:10:40 by josanton          #+#    #+#             */
-/*   Updated: 2022/11/26 18:39:12 by josanton         ###   ########.fr       */
+/*   Updated: 2022/11/26 21:49:03 by josanton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ typedef struct s_vars {
 	void	*mlx;
 	void	*win;
 }			t_vars;
+
+typedef struct s_img {
+	void	*img;
+	char	*relative_path;
+	int		height;
+	int		width;
+}			t_img;
 
 
 int	exit_game(int keycode, t_vars *vars)
@@ -50,12 +57,15 @@ int	key_hooks(int keycode, t_vars *vars)
 int	main(void)
 {
 	t_vars	vars;
+	t_img	image;
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello World!");
-	//mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	//mlx_hook(vars.win, 2, 1L<<0, exit_game, &vars);
 	mlx_key_hook(vars.win, key_hooks, &vars);
+	image.relative_path = "./assets/protect.xpm";
+	image.img = mlx_xpm_file_to_image(vars.mlx, image.relative_path,
+			&image.width, &image.height);
+	mlx_put_image_to_window(vars.mlx, vars.win, image.img, 50, 50);
 	mlx_loop(vars.mlx);
 	return (0);
 }
