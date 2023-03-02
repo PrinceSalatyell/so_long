@@ -3,16 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: josanton <josanton@student.42.fr>          +#+  +:+       +#+         #
+#    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2022/11/26 15:45:22 by josanton         ###   ########.fr        #
+#    Updated: 2023/03/02 00:20:48 by salatiel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION VARS
 
-SRCS	=	so_long.c
+SRCS	=	so_long.c \
+			parse_map.c \
+			utils.c \
+			validate_path.c
 
 OBJS	=	${SRCS:%.c=${DIR_OBJ}%.o}
 
@@ -30,7 +33,7 @@ DIR_OBJ = objs/
 
 CC	=	gcc
 
-42FLAGS	=	-Wall -Wextra -Wextra
+42FLAGS	=	-Wall -Wextra -Wextra -fsanitize=address -g
 
 GCC	=	${CC} ${42FLAGS}
 
@@ -55,7 +58,7 @@ ${NAME}:	${OBJS} mlx_linux/libmlx.a libft/libft.a
 	@echo "${COLOUR_GREEN} >>> SO_LONG OK <<< ${COLOUR_END}"
 
 ${DIR_OBJ}%.o:%.c
-	@git submodule update --init --recursive
+	# @git submodule update --init --recursive
 	@mkdir -p ${dir $@}
 	@${CC} ${42FLAGS} -I mlx_linux -c $< -o $@
 

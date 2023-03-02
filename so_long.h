@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josanton <josanton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2022/11/26 22:07:41 by josanton         ###   ########.fr       */
+/*   Updated: 2023/03/02 00:20:21 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include "libft/libft.h"
 # include <mlx.h>
+# include <stdbool.h>
 
 // DEFINE KEYS
 
@@ -32,10 +33,13 @@
 
 // USEFUL STRUCTS
 
-typedef struct s_vars {
-	void	*mlx;
-	void	*win;
-}			t_vars;
+enum e_events
+{
+	KEY_PRESS = 2,
+	KeyPressMask = 1L << 0,
+	DESTROY_NOTIFY = 17,
+	ButtonPressMask = 1L << 2
+};
 
 typedef struct s_img {
 	void	*img;
@@ -44,7 +48,37 @@ typedef struct s_img {
 	int		width;
 }			t_img;
 
+typedef struct s_player
+{
+	t_img	*avatar;
+	int		x;
+	int		y;
+}			t_player;
+
+typedef struct s_map
+{
+	t_img	*wall;
+	t_img	*door;
+	int		*collectibles;
+	int		*size;
+}			t_map;
+
+
+typedef struct s_vars {
+	void	*mlx;
+	void	*win;
+	t_map	*map;
+}			t_vars;
+
 
 // FUNCTIONS
+
+t_vars	*vars(void);
+
+t_map	*map(void);
+
+bool	valid_syntax(char *file_name);
+
+int		validate_path(int fd, int i);
 
 #endif
