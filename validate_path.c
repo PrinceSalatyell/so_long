@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 18:50:38 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/02 02:13:43 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/03 23:27:20 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_map(int fd, int **map)
 	while (line)
 	{
 		col = 0;
-		while (col < *(vars()->map->size))
+		while (col < *(vars()->map->width))
 		{
 			if (line[col] == '0' || line[col] == '1')
 				map[row][col] = line[col] - '0';
@@ -52,10 +52,10 @@ void	find_collectibles(int **map, t_point *collectibles)
 
 	n_collectibles = 0;
 	row = 0;
-	while (row < *(vars()->map->size))
+	while (row < *(vars()->map->height))
 	{
 		col = 0;
-		while (col < *(vars()->map->size))
+		while (col < *(vars()->map->width))
 		{
 			if (map[row][col] == 'C')
 			{
@@ -69,15 +69,15 @@ void	find_collectibles(int **map, t_point *collectibles)
 	}
 }
 
-int	is_valid_move(int **map, int x, int y, int *n_collectibles)
+int	is_valid_move(int **map, int x, int y, int n_collectibles)
 {
-	if (x < 0 || x >= *(vars()->map->size) || y < 0
-		|| y >= *(vars()->map->size))
+	if (x < 0 || x >= *(vars()->map->width) || y < 0
+		|| y >= *(vars()->map->width))
 		return (0);
-	if (map[y][x] == 'E' && *n_collectibles == 0)
+	if (map[y][x] == 'E' && n_collectibles == 0)
 		return (1);
 	if (map[y][x] == 'C')
-		(*n_collectibles)--;
+		n_collectibles--;
 	return (map[y][x] != '1');
 }
 
@@ -86,7 +86,7 @@ int	is_valid_path(int **map, int n_collectibles,
 {
 	if (current.x == destination.x && current.y == destination.y)
 		return (n_collectibles == 0);
-	if (!is_valid_move(map, current.x, current.y, &n_collectibles))
+	if (!is_valid_move(map, current.x, current.y, n_collectibles))
 		return (0);
 	map[current.y][current.x] = '1';
 	if (is_valid_path(map, n_collectibles,
@@ -112,24 +112,24 @@ int	validate_path(int fd, int i)
 	t_point	current;
 	t_point	destination;
 
-	map = (int **)malloc(*(vars()->map->size) * sizeof(int *));
-	collectibles = malloc(sizeof(t_point) * *(vars()->map->size)
-			* *(vars()->map->size));
-	while (i < *(vars()->map->size))
-		map[i++] = (int *)malloc(*(vars()->map->size) * sizeof(int));
+	map = (int **)malloc(*(vars()->map->height) * sizeof(int *));
+	collectibles = malloc(sizeof(t_point) * *(vars()->map->collectibles));
+	while (i < *(vars()->map->height))
+		map[i++] = (int *)malloc(*(vars()->map->width) * sizeof(int));
 	read_map(fd, map);
 	find_collectibles(map, collectibles);
 	current = collectibles[0];
 	destination = collectibles[*(vars()->map->collectibles) - 1];
 
 	if (is_valid_path(map, *(vars()->map->collectibles), current, destination))
-		write(1, "There is a valid path\n", 22);
+		ft_printf("There is a valid path\n");
 	else
-		write(1, "There is no valid path\n", 23);
+		ft_printf("There is no valid path\n");
 	i = 0;
-	while (i < *(vars()->map->size))
+	while (i < *(vars()->map->height))
 		free(map[i++]);
 	free(map);
+	free(collectibles);
 
 	return (0);
 }

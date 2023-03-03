@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 09:13:59 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/02 02:04:06 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/03 23:33:37 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ char	*valid_shape(int fd, int i, int flag)
 	char	*prev_str;
 
 	str = get_next_line(fd);
-	*(vars()->map->size) = (int) ft_strlen(str);
+	*(vars()->map->width) = (int) ft_strlen(str) - 1;
 	while (str)
 	{
-		if ((int) ft_strlen(str) != *(vars()->map->size))
+		if ((int) ft_strlen(str) - 1 != *(vars()->map->width))
 			map_error("The map is not rectangular");
 		if (str[0] != '1' || str[ft_strlen(str) - 2] != '1')
 			map_error("Border should be a wall");
@@ -56,6 +56,7 @@ void	valid_elements(int fd, int i, int p_count, int e_count)
 	str = get_next_line(fd);
 	while (str)
 	{
+		(*(vars()->map->height))++;
 		i = -1;
 		while (str[++i])
 		{

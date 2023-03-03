@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/02 00:20:21 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/03 21:30:53 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ typedef struct s_map
 	t_img	*wall;
 	t_img	*door;
 	int		*collectibles;
-	int		*size;
+	int		*width;
+	int		*height;
 }			t_map;
 
 
