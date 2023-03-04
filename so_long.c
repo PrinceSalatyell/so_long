@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:10:40 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/03 21:32:19 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:38:34 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	main(int argc, char **argv)
 	close(fd);
 	free(vars()->map->width);
 	free(vars()->map->collectibles);
+	free(vars()->map->collectibles_copy);
 	free(vars()->map->height);
+	free(vars()->map->exit_found);
 	return (ret);
 }

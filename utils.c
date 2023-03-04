@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 09:07:20 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/03 22:05:28 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:13:57 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,14 @@ t_map	*map(void)
 	static t_map	map;
 
 	map.collectibles = malloc(sizeof(int) * 1);
+	map.collectibles_copy = malloc(sizeof(int) * 1);
 	map.width = malloc(sizeof(int) * 1);
 	map.height = malloc(sizeof(int) * 1);
+	map.exit_found = malloc(sizeof(int) * 1);
 	*(map.collectibles) = 0;
+	*(map.collectibles_copy) = 0;
 	*(map.height) = 0;
+	*(map.exit_found) = 0;
 
 	return (&map);
 }

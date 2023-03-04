@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/03 21:30:53 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:41:20 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,17 @@ typedef struct s_map
 	t_img	*wall;
 	t_img	*door;
 	int		*collectibles;
+	int		*collectibles_copy;
 	int		*width;
 	int		*height;
+	int		*exit_found;
 }			t_map;
 
+typedef struct s_point
+{
+	int			x;
+	int			y;
+}				t_point;
 
 typedef struct s_vars {
 	void	*mlx;
@@ -81,5 +88,7 @@ t_map	*map(void);
 bool	valid_syntax(char *file_name);
 
 int		validate_path(int fd, int i);
+
+void	map_error(char *reason);
 
 #endif
