@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 18:50:38 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/04 19:28:38 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 03:00:37 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	read_map(int fd, int **map)
 	while (line)
 	{
 		col = 0;
-		while (col < *(vars()->map->width))
+		while (col < (*(vars()->map->width)) - 1)
 		{
 			if (line[col] == '0' || line[col] == '1')
 				map[row][col] = line[col] - '0';
@@ -31,6 +31,7 @@ void	read_map(int fd, int **map)
 				map[row][col] = line[col];
 			col++;
 		}
+		ft_strncpy(vars()->map->structure[row], line, *(vars()->map->width));
 		free(line);
 		row++;
 		line = get_next_line(fd);
@@ -74,8 +75,15 @@ void	validate_path(int fd, int i)
 	int		**map;
 
 	map = (int **)malloc(*(vars()->map->height) * sizeof(int *));
+	vars()->map->structure = (char **)malloc(*(vars()->map->height)
+		* sizeof(int *));
 	while (i < *(vars()->map->height))
-		map[i++] = (int *)malloc(*(vars()->map->width) * sizeof(int));
+	{
+		map[i] = (int *)malloc(*(vars()->map->width) * sizeof(int));
+		vars()->map->structure[i] = (char *)malloc(*(vars()->map->width)
+			* sizeof(int));
+		i++;
+	}
 	read_map(fd, map);
 	*(vars()->map->collectibles_copy) = *(vars()->map->collectibles);
 	if (!is_valid_path(map, 2, 1))

@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/04 18:41:20 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 01:45:41 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define D 100
 # define W 119
 # define S 115
+# define PIXELS 32
 
 // USEFUL STRUCTS
 
@@ -57,13 +58,17 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	t_img	*wall;
-	t_img	*door;
-	int		*collectibles;
-	int		*collectibles_copy;
-	int		*width;
-	int		*height;
-	int		*exit_found;
+	char		**structure;
+	t_img		*wall;
+	t_img		*door;
+	t_img		*space;
+	t_img		*coin;
+	int			*collectibles;
+	int			*collectibles_copy;
+	int			*width;
+	int			*height;
+	int			*exit_found;
+	t_player	*player;
 }			t_map;
 
 typedef struct s_point
@@ -81,14 +86,18 @@ typedef struct s_vars {
 
 // FUNCTIONS
 
-t_vars	*vars(void);
+t_vars		*vars(void);
 
-t_map	*map(void);
+t_map		*map(void);
 
-bool	valid_syntax(char *file_name);
+t_player	*player(void);
 
-int		validate_path(int fd, int i);
+bool		valid_syntax(char *file_name);
 
-void	map_error(char *reason);
+void		validate_path(int fd, int i);
+
+void		map_error(char *reason);
+
+void		load_images(void);
 
 #endif

@@ -6,16 +6,17 @@
 #    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2023/03/04 18:33:18 by salatiel         ###   ########.fr        #
+#    Updated: 2023/03/05 03:13:14 by salatiel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION VARS
 
-SRCS	=	so_long.c \
-			parse_map.c \
-			utils.c \
-			validate_path.c
+SRCS	=	so_long.c		\
+			parse_map.c		\
+			utils.c			\
+			validate_path.c	\
+			image_management.c
 
 OBJS	=	${SRCS:%.c=${DIR_OBJ}%.o}
 

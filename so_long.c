@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:10:40 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/04 18:38:34 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 03:13:11 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,33 @@
 // 	mlx_put_image_to_window(vars()->mlx, vars()->win, vars()->image->img, 50, 50);
 // }
 
-// int	exit_game(int keycode)
-// {
-// 	mlx_destroy_window(vars()->mlx, vars()->win);
-// 	mlx_destroy_image(vars()->mlx, vars()->image->img);
-// 	mlx_destroy_display(vars()->mlx);
-// 	ft_printf("EXIT!\n");
-// 	//ft_putstr_fd(message, 1);
-// 	//ft_putstr_fd("\n", 1);
-// 	//free_so_long();
-// 	exit(0);
-// }
+int	exit_game()
+{
+	int	i;
 
-// int	key_hooks(int keycode)
-// {
-// 	if (keycode == ESC)
-// 		exit_game(keycode);
+	i = 0;
+	while (i < *(vars()->map->height))
+		free(vars()->map->structure[i++]);
+	free(vars()->map->structure);
+	mlx_destroy_window(vars()->mlx, vars()->win);
+	mlx_destroy_image(vars()->mlx, vars()->map->wall);
+	mlx_destroy_image(vars()->mlx, vars()->map->space);
+	mlx_destroy_image(vars()->mlx, vars()->map->door);
+	mlx_destroy_image(vars()->mlx, vars()->map->coin);
+	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar);
+	mlx_destroy_display(vars()->mlx);
+	free(vars()->mlx);
+	ft_printf("EXIT!\n");
+	//ft_putstr_fd(message, 1);
+	//ft_putstr_fd("\n", 1);
+	//free_so_long();
+	exit(0);
+}
+
+int	key_hooks(int keycode)
+{
+	if (keycode == ESC)
+ 		exit_game();
 // 	if (keycode == LEFT)
 // 		ft_printf("left");
 // 	if (keycode == RIGHT)
@@ -50,8 +61,8 @@
 // 		ft_printf("s");
 // 	if (keycode == D)
 // 		ft_printf("d");
-// 	return (0);
-// }
+	return (0);
+}
 
 // int	force_exit(void)
 // {
@@ -60,36 +71,40 @@
 
 int	main(int argc, char **argv)
 {
-	//t_img	image;
-
-	//vars()->mlx = mlx_init();
-	//vars()->win = mlx_new_window(vars()->mlx, 640, 480, "Hello World!");
-	//mlx_key_hook(vars()->win, key_hooks, &vars()->;
-	//image.relative_path = "./assets/protect.xpm";
-	//image.img = mlx_xpm_file_to_image(vars()->mlx, image.relative_path,
-	//		&image.width, &image.height);
-	vars()->map = map();
-	//mlx_hook(vars()->win, KEY_PRESS, KeyPressMask, key_hooks, NULL);
-	//mlx_hook(vars()->win, DESTROY_NOTIFY, ButtonPressMask,
-	//	exit_game, NULL);
-	//mlx_loop_hook(vars()->mlx, render_next_frame, &vars()->;
-	//mlx_loop(vars()->mlx);
-
+	t_img	image;
 	int		fd;
-	int		ret;
 
 	if (argc != 2)
-		return (1);
+		map_error("Make sure to to provide a map: ./so_long <map_name>.ber");
 	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (1);
+	if (fd < 0)
+		map_error("Error opening the map file. Are you sure the name is correct?");
+	vars()->map = map();
 	valid_syntax(argv[1]);
-	ret = validate_path(fd, 0);
+	validate_path(fd, 0);
 	close(fd);
+	vars()->mlx = mlx_init();
+	if (vars()->mlx)
+		vars()->win = mlx_new_window(vars()->mlx, PIXELS * *(vars()->map->width),
+			PIXELS * *(vars()->map->height), "so_long");
+	vars()->map->player = player();
+	mlx_hook(vars()->win, KEY_PRESS, KeyPressMask, key_hooks, NULL);
+	mlx_hook(vars()->win, DESTROY_NOTIFY, ButtonPressMask,
+		exit_game, NULL);
+	load_images();
+	//mlx_key_hook(vars()->win, key_hooks, &vars()->;
+	//mlx_loop_hook(vars()->mlx, render_next_frame, &vars()->;
+	mlx_loop(vars()->mlx);
+
+	
+
+	
+	
+	
 	free(vars()->map->width);
 	free(vars()->map->collectibles);
 	free(vars()->map->collectibles_copy);
 	free(vars()->map->height);
 	free(vars()->map->exit_found);
-	return (ret);
+	return (0);
 }

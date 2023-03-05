@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 09:07:20 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/04 18:13:57 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 03:13:15 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,11 @@ t_map	*map(void)
 	*(map.exit_found) = 0;
 
 	return (&map);
+}
+
+t_player	*player(void)
+{
+	static t_player	player;
+
+	return (&player);
 }
