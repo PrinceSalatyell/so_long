@@ -6,7 +6,7 @@
 #    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2023/03/05 03:13:14 by salatiel         ###   ########.fr        #
+#    Updated: 2023/03/05 17:56:33 by salatiel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ DIR_OBJ = objs/
 
 CC	=	gcc
 
-42FLAGS	=	-Wall -Wextra -Wextra -fsanitize=leak -g
+42FLAGS	=	-Wall -Wextra -Wextra -g #-fsanitize=leak
 
 GCC	=	${CC} ${42FLAGS}
 

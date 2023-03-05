@@ -6,19 +6,19 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:10:40 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/05 03:13:11 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:44:57 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// int	render_next_frame()
-// {
-// 	ft_printf("We got here!\n");
-// 	mlx_put_image_to_window(vars()->mlx, vars()->win, vars()->image->img, 50, 50);
-// }
+int	render_next_frame(void)
+{
+	//ft_printf("We got here!\n");
+	print_map(-1, -1);
+}
 
-int	exit_game()
+int	exit_game(void)
 {
 	int	i;
 
@@ -34,6 +34,11 @@ int	exit_game()
 	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar);
 	mlx_destroy_display(vars()->mlx);
 	free(vars()->mlx);
+	free(vars()->map->width);
+	free(vars()->map->collectibles);
+	free(vars()->map->collectibles_copy);
+	free(vars()->map->height);
+	free(vars()->map->exit_found);
 	ft_printf("EXIT!\n");
 	//ft_putstr_fd(message, 1);
 	//ft_putstr_fd("\n", 1);
@@ -45,23 +50,9 @@ int	key_hooks(int keycode)
 {
 	if (keycode == ESC)
  		exit_game();
-// 	if (keycode == LEFT)
-// 		ft_printf("left");
-// 	if (keycode == RIGHT)
-// 		mlx_loop_hook(vars()->mlx, render_next_frame, &vars())
-// 	if (keycode == UP)
-// 		ft_printf("up");
-// 	if (keycode == DOWN)
-// 		ft_printf("down");
-// 	if (keycode == A)
-// 		ft_printf("a");
-// 	if (keycode == W)
-// 		ft_printf("w");
-// 	if (keycode == S)
-// 		ft_printf("s");
-// 	if (keycode == D)
-// 		ft_printf("d");
-	return (0);
+	else
+		move(keycode);
+	return (1);
 }
 
 // int	force_exit(void)
@@ -92,19 +83,7 @@ int	main(int argc, char **argv)
 	mlx_hook(vars()->win, DESTROY_NOTIFY, ButtonPressMask,
 		exit_game, NULL);
 	load_images();
-	//mlx_key_hook(vars()->win, key_hooks, &vars()->;
-	//mlx_loop_hook(vars()->mlx, render_next_frame, &vars()->;
+	mlx_loop_hook(vars()->mlx, render_next_frame, NULL);
 	mlx_loop(vars()->mlx);
-
-	
-
-	
-	
-	
-	free(vars()->map->width);
-	free(vars()->map->collectibles);
-	free(vars()->map->collectibles_copy);
-	free(vars()->map->height);
-	free(vars()->map->exit_found);
 	return (0);
 }

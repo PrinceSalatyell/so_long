@@ -6,25 +6,27 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 18:50:38 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/05 03:00:37 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:51:41 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	read_map(int fd, int **map)
+void	read_map(int fd, int **map, int col, int row)
 {
 	char	*line;
-	int		row;
-	int		col;
 
-	row = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
 		col = 0;
 		while (col < (*(vars()->map->width)) - 1)
 		{
+			if (line[col] == 'P')
+			{
+				vars()->map->player->y = row;
+				vars()->map->player->x = col;
+			}
 			if (line[col] == '0' || line[col] == '1')
 				map[row][col] = line[col] - '0';
 			else
@@ -84,7 +86,7 @@ void	validate_path(int fd, int i)
 			* sizeof(int));
 		i++;
 	}
-	read_map(fd, map);
+	read_map(fd, map, 0, 0);
 	*(vars()->map->collectibles_copy) = *(vars()->map->collectibles);
 	if (!is_valid_path(map, 2, 1))
 		map_error("There is no valid path");
@@ -92,4 +94,5 @@ void	validate_path(int fd, int i)
 	while (i < *(vars()->map->height))
 		free(map[i++]);
 	free(map);
+	ft_printf("There is a valid path\n");
 }

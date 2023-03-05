@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 22:26:48 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/05 03:13:13 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:47:24 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,15 @@ void	load_images(void)
 			&width, &height);
 	vars()->map->coin = mlx_xpm_file_to_image(vars()->mlx, "./assets/collectible.xpm",
 			&width, &height);
-	vars()->map->player->avatar = mlx_xpm_file_to_image(vars()->mlx, "./assets/player_down.xpm",
+	vars()->map->player->avatar_down = mlx_xpm_file_to_image(vars()->mlx, "./assets/player_down.xpm",
 			&width, &height);
+	vars()->map->player->avatar_up = mlx_xpm_file_to_image(vars()->mlx, "./assets/player_up.xpm",
+			&width, &height);
+	vars()->map->player->avatar_left = mlx_xpm_file_to_image(vars()->mlx, "./assets/player_left.xpm",
+			&width, &height);
+	vars()->map->player->avatar_right = mlx_xpm_file_to_image(vars()->mlx, "./assets/player_right.xpm",
+			&width, &height);
+	vars()->map->player->avatar = vars()->map->player->avatar_down;
 	print_map(-1, -1);
 }
 
@@ -53,23 +60,58 @@ void	print_map(int i, int j)
 					vars()->win, vars()->map->door, PIXELS * j, PIXELS * i);
 			else if (vars()->map->structure[i][j] == 'P')
 				mlx_put_image_to_window(vars()->mlx,
-					vars()->win, vars()->map->player->avatar, PIXELS * j, PIXELS * i);
+					vars()->win, vars()->map->player->avatar,
+					PIXELS * vars()->map->player->x, PIXELS * vars()->map->player->y);
 		}
 	}
 }
 
-// void	move(int x, int y)
-// {
-// 	if (x < 0 || x >= *(vars()->map->width) || y < 0
-// 		|| y >= *(vars()->map->height) || map[y][x] == 1)
-// 		return (0);
-// 	if (map[y][x] == 'C')
-// 	{
-// 		(*(vars()->map->collectibles))--;
-// 		vars()->map->structure[y][x] = '0';
-// 	}
-// 	if (map[y][x] == 'E' && !(*(vars()->map->collectibles)))
-// 		exit(0);
-	
-// 	print_map(-1, -1);
-// }
+void	animation(keycode)
+{
+	if (keycode == W || keycode == UP)
+		vars()->map->player->avatar = vars()->map->player->avatar_up;
+	if (keycode == S || keycode == DOWN)
+		vars()->map->player->avatar = vars()->map->player->avatar_down;
+	if (keycode == A || keycode == LEFT)
+		vars()->map->player->avatar = vars()->map->player->avatar_left;
+	if (keycode == D || keycode == RIGHT)
+		vars()->map->player->avatar = vars()->map->player->avatar_right;
+}
+
+void	collide(void)
+{
+	int	x;
+	int	y;
+
+	x = vars()->map->player->x;
+	y = vars()->map->player->y;
+	if (vars()->map->structure[y][x] == 'C')
+	{
+		(*(vars()->map->collectibles))--;
+		vars()->map->structure[y][x] = '0';
+	}
+	if (vars()->map->structure[y][x] == 'E' && !(*(vars()->map->collectibles)))
+		exit_game();
+	//if (infos()->map[y][x] == 'N')
+	//	game_over("you lost :(");
+}
+
+void	move(int keycode)
+{
+	int	x;
+	int	y;
+
+	x = vars()->map->player->x;
+	y = vars()->map->player->y;
+	if ((keycode == A || keycode == LEFT) && vars()->map->structure[y][x - 1] != '1')
+		(vars()->map->player->x)--;
+	else if ((keycode == D || keycode == RIGHT) && vars()->map->structure[y][x + 1] != '1')
+		(vars()->map->player->x)++;
+	else if ((keycode == W || keycode == UP) && vars()->map->structure[y - 1][x] != '1')
+		(vars()->map->player->y)--;
+	else if ((keycode == S || keycode == DOWN) && vars()->map->structure[y + 1][x] != '1')
+		(vars()->map->player->y)++;
+	animation(keycode);
+	collide();
+	return (1);
+}
