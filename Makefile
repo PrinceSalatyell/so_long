@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
+#    By: josanton <josanton@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2023/03/06 15:47:03 by salatiel         ###   ########.fr        #
+#    Updated: 2023/03/06 18:54:50 by josanton         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ DIR_OBJ = objs/
 
 CC	=	gcc
 
-42FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=leak
+42FLAGS	=	-Wall -Werror -Wextra -g #-fsanitize=leak
 
 GCC	=	${CC} ${42FLAGS}
 

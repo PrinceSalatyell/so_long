@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: josanton <josanton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/06 15:32:10 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:06:03 by josanton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,20 @@
 # define D 100
 # define W 119
 # define S 115
-# define PIXELS 64
+# define PX 64
+
+// DEFINE PATH VARIABLES
+
+# define WINDOWS_NAME "so_long"
+# define DOOR_CLOSED "./assets/door_closed.xpm"
+# define DOOR_OPEN "./assets/door_open.xpm"
+# define PLAYER_LEFT "./assets/player_left.xpm"
+# define PLAYER_RIGHT "./assets/player_right.xpm"
+# define PLAYER_UP "./assets/player_up.xpm"
+# define PLAYER_DOWN "./assets/player_down.xpm"
+# define COLLECTIBLES "./assets/collectible.xpm"
+# define FLOOR "./assets/floor.xpm"
+# define WALL "./assets/wall.xpm"
 
 // USEFUL STRUCTS
 
@@ -42,20 +55,13 @@ enum e_events
 	ButtonPressMask = 1L << 2
 };
 
-typedef struct s_img {
-	void	*img;
-	char	*relative_path;
-	int		height;
-	int		width;
-}			t_img;
-
 typedef struct s_player
 {
-	t_img	*avatar;
-	t_img	*avatar_up;
-	t_img	*avatar_down;
-	t_img	*avatar_left;
-	t_img	*avatar_right;
+	void	*avatar;
+	void	*avatar_up;
+	void	*avatar_down;
+	void	*avatar_left;
+	void	*avatar_right;
 	int		x;
 	int		y;
 	int		steps;
@@ -63,17 +69,17 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	char		**structure;
-	t_img		*wall;
-	t_img		*door;
-	t_img		*space;
-	t_img		*coin;
-	int			*collectibles;
-	int			*collectibles_copy;
-	int			*width;
-	int			*height;
-	int			*exit_found;
-	t_player	*player;
+	char		**st;
+	void		*wall;
+	void		*door;
+	void		*space;
+	void		*coin;
+	int			collectibles;
+	int			collectibles_copy;
+	int			width;
+	int			height;
+	int			exit_found;
+	t_player	player;
 }			t_map;
 
 typedef struct s_vars {
@@ -88,11 +94,11 @@ t_vars		*vars(void);
 
 t_map		*map(void);
 
-t_player	*player(void);
+t_player	player(void);
 
 bool		valid_syntax(char *file_name);
 
-void		validate_path(int fd, int i);
+void		validate_path(void);
 
 void		map_error(char *reason);
 
