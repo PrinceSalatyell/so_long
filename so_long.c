@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:10:40 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/05 20:44:57 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:22:15 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	render_next_frame(void)
 {
-	//ft_printf("We got here!\n");
 	print_map(-1, -1);
+	return (1);
 }
 
 int	exit_game(void)
@@ -31,7 +31,10 @@ int	exit_game(void)
 	mlx_destroy_image(vars()->mlx, vars()->map->space);
 	mlx_destroy_image(vars()->mlx, vars()->map->door);
 	mlx_destroy_image(vars()->mlx, vars()->map->coin);
-	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar);
+	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar_down);
+	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar_left);
+	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar_right);
+	mlx_destroy_image(vars()->mlx, vars()->map->player->avatar_up);
 	mlx_destroy_display(vars()->mlx);
 	free(vars()->mlx);
 	free(vars()->map->width);
@@ -40,9 +43,6 @@ int	exit_game(void)
 	free(vars()->map->height);
 	free(vars()->map->exit_found);
 	ft_printf("EXIT!\n");
-	//ft_putstr_fd(message, 1);
-	//ft_putstr_fd("\n", 1);
-	//free_so_long();
 	exit(0);
 }
 
@@ -51,18 +51,12 @@ int	key_hooks(int keycode)
 	if (keycode == ESC)
  		exit_game();
 	else
-		move(keycode);
+		move(keycode, vars()->map->player->x, vars()->map->player->y);
 	return (1);
 }
 
-// int	force_exit(void)
-// {
-
-// }
-
 int	main(int argc, char **argv)
 {
-	t_img	image;
 	int		fd;
 
 	if (argc != 2)
@@ -71,6 +65,7 @@ int	main(int argc, char **argv)
 	if (fd < 0)
 		map_error("Error opening the map file. Are you sure the name is correct?");
 	vars()->map = map();
+	vars()->map->player = player();
 	valid_syntax(argv[1]);
 	validate_path(fd, 0);
 	close(fd);
@@ -78,7 +73,6 @@ int	main(int argc, char **argv)
 	if (vars()->mlx)
 		vars()->win = mlx_new_window(vars()->mlx, PIXELS * *(vars()->map->width),
 			PIXELS * *(vars()->map->height), "so_long");
-	vars()->map->player = player();
 	mlx_hook(vars()->win, KEY_PRESS, KeyPressMask, key_hooks, NULL);
 	mlx_hook(vars()->win, DESTROY_NOTIFY, ButtonPressMask,
 		exit_game, NULL);

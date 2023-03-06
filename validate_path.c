@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 18:50:38 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/05 20:51:41 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 03:33:58 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,10 @@ void	validate_path(int fd, int i)
 	}
 	read_map(fd, map, 0, 0);
 	*(vars()->map->collectibles_copy) = *(vars()->map->collectibles);
-	if (!is_valid_path(map, 2, 1))
+	if (!is_valid_path(map, vars()->map->player->x, vars()->map->player->y))
 		map_error("There is no valid path");
 	i = 0;
 	while (i < *(vars()->map->height))
 		free(map[i++]);
 	free(map);
-	ft_printf("There is a valid path\n");
 }

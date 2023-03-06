@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/05 20:44:39 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:21:43 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,11 @@ typedef struct s_map
 	t_player	*player;
 }			t_map;
 
-typedef struct s_point
-{
-	int			x;
-	int			y;
-}				t_point;
-
 typedef struct s_vars {
 	void	*mlx;
 	void	*win;
 	t_map	*map;
 }			t_vars;
-
 
 // FUNCTIONS
 
@@ -104,7 +97,7 @@ void		map_error(char *reason);
 
 void		load_images(void);
 
-void		move(int keycode);
+void		move(int keycode, int x, int y);
 
 void		print_map(int i, int j);
 

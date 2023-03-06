@@ -6,7 +6,7 @@
 #    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2023/03/05 17:56:33 by salatiel         ###   ########.fr        #
+#    Updated: 2023/03/06 02:22:47 by salatiel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ DIR_OBJ = objs/
 
 CC	=	gcc
 
-42FLAGS	=	-Wall -Wextra -Wextra -g #-fsanitize=leak
+42FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=leak
 
 GCC	=	${CC} ${42FLAGS}
 
@@ -59,7 +59,7 @@ ${NAME}:	${OBJS} mlx_linux/libmlx.a libft/libft.a
 	@echo "${COLOUR_GREEN} >>> SO_LONG OK <<< ${COLOUR_END}"
 
 ${DIR_OBJ}%.o:%.c
-	# @git submodule update --init --recursive
+	@git submodule update --init --recursive
 	@mkdir -p ${dir $@}
 	@${CC} ${42FLAGS} -I mlx_linux -c $< -o $@
 

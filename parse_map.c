@@ -6,11 +6,24 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 09:13:59 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/05 03:13:16 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 03:35:19 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	ft_strlen_nl(const char *str)
+{
+	unsigned int	l;
+
+	l = 0;
+	while (*str && *str != 10)
+	{
+		l++;
+		str++;
+	}
+	return (l);
+}
 
 void	map_error(char *reason)
 {
@@ -26,10 +39,10 @@ char	*valid_shape(int fd, int i, int flag)
 	char	*prev_str;
 
 	str = get_next_line(fd);
-	*(vars()->map->width) = (int) ft_strlen(str) - 1;
+	*(vars()->map->width) = (int) ft_strlen_nl(str);
 	while (str)
 	{
-		if ((int) ft_strlen(str) - 1 != *(vars()->map->width))
+		if ((int) ft_strlen_nl(str) != *(vars()->map->width))
 			map_error("The map is not rectangular");
 		if (str[0] != '1' || str[ft_strlen(str) - 2] != '1')
 			map_error("Border should be a wall");
@@ -93,16 +106,6 @@ bool	valid_syntax(char *file_name)
 	free(str);
 	fd = open(file_name, O_RDONLY);
 	valid_elements(fd, -1, 0, 0);
-	ft_printf("Good map\n");
 	close(fd);
 	return (true);
 }
-// void	open_images()
-// {
-// 	return ;
-// }
-
-// void	print_map()
-// {
-// 	return ;
-// }

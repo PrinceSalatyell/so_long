@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 09:07:20 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/05 03:13:15 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 01:53:36 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_map	*map(void)
 	*(map.collectibles_copy) = 0;
 	*(map.height) = 0;
 	*(map.exit_found) = 0;
-
 	return (&map);
 }
 
