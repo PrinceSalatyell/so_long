@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 18:50:38 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/06 03:33:58 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:14:45 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	read_map(int fd, int **map, int col, int row)
 	while (line)
 	{
 		col = 0;
-		while (col < (*(vars()->map->width)) - 1)
+		while (col < (*(vars()->map->width)))
 		{
 			if (line[col] == 'P')
 			{

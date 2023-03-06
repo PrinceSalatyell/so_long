@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 22:26:48 by salatiel          #+#    #+#             */
-/*   Updated: 2023/03/06 02:11:10 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:22:51 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,8 @@ void	print_map(int i, int j)
 	}
 }
 
-void	collide(int y_x, int plus_minus)
+void	collide(int y_x, int plus_minus, int x, int y)
 {
-	int	x;
-	int	y;
-
-	x = vars()->map->player->x;
-	y = vars()->map->player->y;
 	if (vars()->map->structure[y][x] == 'C')
 	{
 		(*(vars()->map->collectibles))--;
@@ -93,6 +88,8 @@ void	collide(int y_x, int plus_minus)
 			(vars()->map->player->x)--;
 		vars()->map->structure[vars()->map->player->y][vars()->map->player->x] = 'P';
 	}
+	else
+		ft_printf("Steps -> %i\n", ++vars()->map->player->steps);
 }
 
 void	animation(int keycode, int x, int y)
@@ -100,22 +97,22 @@ void	animation(int keycode, int x, int y)
 	if (keycode == W || keycode == UP)
 	{
 		vars()->map->player->avatar = vars()->map->player->avatar_up;
-		collide(0, 0);
+		collide(0, 0, vars()->map->player->x, vars()->map->player->y);
 	}
 	if (keycode == S || keycode == DOWN)
 	{
 		vars()->map->player->avatar = vars()->map->player->avatar_down;
-		collide(0, 1);
+		collide(0, 1, vars()->map->player->x, vars()->map->player->y);
 	}
 	if (keycode == A || keycode == LEFT)
 	{
 		vars()->map->player->avatar = vars()->map->player->avatar_left;
-		collide(1, 0);
+		collide(1, 0, vars()->map->player->x, vars()->map->player->y);
 	}
 	if (keycode == D || keycode == RIGHT)
 	{
 		vars()->map->player->avatar = vars()->map->player->avatar_right;
-		collide(1, 1);
+		collide(1, 1, vars()->map->player->x, vars()->map->player->y);
 	}
 	if (vars()->map->structure[y][x] != 'E')
 		vars()->map->structure[y][x] = 'P';

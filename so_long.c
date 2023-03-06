@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:10:40 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/06 02:22:15 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:12:54 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,21 @@ int	exit_game(void)
 
 int	key_hooks(int keycode)
 {
+	int	size;
+
+	size = PIXELS;
 	if (keycode == ESC)
  		exit_game();
 	else
+	{
 		move(keycode, vars()->map->player->x, vars()->map->player->y);
+		if (!(*(vars()->map->collectibles)))
+		{
+			mlx_destroy_image(vars()->mlx, vars()->map->door);
+			vars()->map->door = mlx_xpm_file_to_image(vars()->mlx,
+				"./assets/door_open.xpm", &size, &size);
+		}
+	}
 	return (1);
 }
 

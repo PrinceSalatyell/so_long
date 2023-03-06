@@ -6,7 +6,7 @@
 /*   By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:46:30 by josanton          #+#    #+#             */
-/*   Updated: 2023/03/06 02:21:43 by salatiel         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:32:10 by salatiel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define D 100
 # define W 119
 # define S 115
-# define PIXELS 32
+# define PIXELS 64
 
 // USEFUL STRUCTS
 
@@ -58,6 +58,7 @@ typedef struct s_player
 	t_img	*avatar_right;
 	int		x;
 	int		y;
+	int		steps;
 }			t_player;
 
 typedef struct s_map

@@ -6,7 +6,7 @@
 #    By: salatiel <salatiel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:36:16 by josanton          #+#    #+#              #
-#    Updated: 2023/03/06 02:22:47 by salatiel         ###   ########.fr        #
+#    Updated: 2023/03/06 15:47:03 by salatiel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,13 +71,13 @@ mlx_linux/libmlx.a:
 	@echo "${COLOUR_GREEN} >>> MLX OK <<< ${COLOUR_END}"
 
 clean:
-	@${MAKE} clean -C ${LIBFT_DIR}
-	@${MAKE} clean -C ${MLX_LINUX_DIR}
+	@${MAKE} -s clean -C ${LIBFT_DIR}
+	@${MAKE} -s clean -C ${MLX_LINUX_DIR}
 	@${RM} -r ${DIR_OBJ}
 	@echo "${COLOUR_YELLOW} >>> OBJS CLEANED <<< ${COLOUR_END}"
 
 fclean:		clean
-	@${MAKE} fclean -C ${LIBFT_DIR}
+	@${MAKE} -s fclean -C ${LIBFT_DIR}
 	@${RM} ${NAME}
 	@echo "${COLOUR_YELLOW} >>> ALL CLEANED <<< ${COLOUR_END}"
 
